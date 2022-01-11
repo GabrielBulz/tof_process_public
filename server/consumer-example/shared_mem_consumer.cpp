@@ -41,7 +41,7 @@ int main(int argc, char *argv[]) {
     unsigned long frame_nr=0;
     while (true) {
         if (_consumer.read(time_stamp, data, std::chrono::seconds(10))) {
-            snprintf(file_name, sizeof(file_name), "%lu%s%06lu%s", frame_nr++, "_", time_stamp, ext.c_str());
+            snprintf(file_name, sizeof(file_name), "%05lu_%06lu%s", frame_nr++, time_stamp, ext.c_str());
             file_name[sizeof(file_name) - 1] = '\0';
             full_path = dir / boost::filesystem::path(file_name);
             auto output_file = std::fstream(full_path.c_str(), std::ios::out | std::ios::binary | std::ios::trunc);
