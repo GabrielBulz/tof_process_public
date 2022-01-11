@@ -38,9 +38,10 @@ int main(int argc, char *argv[]) {
     std::vector<uint8_t> data;
     char file_name[124];
     uint64_t time_stamp;
+    unsigned long frame_nr=0;
     while (true) {
         if (_consumer.read(time_stamp, data, std::chrono::seconds(10))) {
-            snprintf(file_name, sizeof(file_name), "%06lu%s", time_stamp, ext.c_str());
+            snprintf(file_name, sizeof(file_name), "%lu%s%06lu%s", frame_nr++, "_", time_stamp, ext.c_str());
             file_name[sizeof(file_name) - 1] = '\0';
             full_path = dir / boost::filesystem::path(file_name);
             auto output_file = std::fstream(full_path.c_str(), std::ios::out | std::ios::binary | std::ios::trunc);
